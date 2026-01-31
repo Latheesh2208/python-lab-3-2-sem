@@ -1,0 +1,11 @@
+class Solution:
+    def isUgly(self, n: int) -> bool:
+        # Edge case:non-positive numbers are not ugly
+        if n<=0:
+            return False
+        # Keep dividing by 2,3,and5 while possible
+        for prime in[2,3,5]:
+            while n% prime==0:
+                n//=prime
+        #If after all dimensions we get 1,it onl has 2,3,5 as prime factors
+        return n==1
