@@ -1,0 +1,59 @@
+from typing import List
+
+class Solution:
+    def tictactoe(self, moves: List[List[int]]) -> str:
+        # All possible winning lines
+        wins = [
+            [(0,0), (0,1), (0,2)],  # top row
+            [(1,0), (1,1), (1,2)],  # middle row
+            [(2,0), (2,1), (2,2)],  # bottom row
+            [(0,0), (1,0), (2,0)],  # left column
+            [(0,1), (1,1), (2,1)],  # middle column
+            [(0,2), (1,2), (2,2)],  # right column
+            [(0,0), (1,1), (2,2)],  # main diagonal
+            [(0,2), (1,1), (2,0)]   # anti-diagonal
+        ]
+
+        # Separate moves for A and B
+        A = set(tuple(moves[i]) for i in range(0, len(moves), 2))
+        B = set(tuple(moves[i]) for i in range(1, len(moves), 2))
+
+        # Check if A wins
+        for w in wins:
+            if all(pos in A for pos in w):
+                return "A"
+
+        # Check if B wins
+        for w in wins:
+            if all(pos in B for pos in w):
+                return "B"
+
+        # No winner
+        if len(moves) == 9:
+            return "Draw"
+
+        return "Pending"
+
+
+def main():
+    sol = Solution()
+
+    # Test case 1
+    moves1 = [[0,0],[2,0],[1,1],[2,1],[2,2]]
+    print("Result:", sol.tictactoe(moves1))  # A
+
+    # Test case 2
+    moves2 = [[0,0],[1,1],[0,1],[0,2],[1,0],[2,0]]
+    print("Result:", sol.tictactoe(moves2))  # B
+
+    # Test case 3
+    moves3 = [[0,0],[1,1],[2,0],[1,0],[1,2],[2,1],[0,1],[0,2],[2,2]]
+    print("Result:", sol.tictactoe(moves3))  # Draw
+
+    # Test case 4
+    moves4 = [[0,0],[1,1]]
+    print("Result:", sol.tictactoe(moves4))  # Pending
+
+
+if __name__ == "__main__":
+    main()
